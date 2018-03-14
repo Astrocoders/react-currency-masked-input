@@ -18,11 +18,17 @@ const removeLeadingZeros = number => number.replace(/^0+([0-9]+)/, '$1')
 
 const addDecimalToNumber = number => {
   const centsStartingPosition = number.length - 2
+  const millions = removeLeadingZeros(
+    number.substring(0, 3)
+  )
+  const thousands = removeLeadingZeros(
+    number.substring(4, 7)
+  )
   const dollars = removeLeadingZeros(
-    number.substring(0, centsStartingPosition)
+    number.substring(8, centsStartingPosition)
   )
   const cents = number.substring(centsStartingPosition)
-  return `${dollars}.${cents}`
+  return `${millions}.${thousands}.${dollars},${cents}`
 }
 
 export const toCurrency = value => {
