@@ -18,17 +18,35 @@ const removeLeadingZeros = number => number.replace(/^0+([0-9]+)/, '$1')
 
 const addDecimalToNumber = number => {
   const centsStartingPosition = number.length - 2
-  const millions = removeLeadingZeros(
-    number.substring(0, 3)
-  )
-  const thousands = removeLeadingZeros(
-    number.substring(4, 7)
-  )
-  const dollars = removeLeadingZeros(
-    number.substring(8, centsStartingPosition)
-  )
+  const dollarsStartingPosition = number.length - 5
+  const thousandsStartingPosition = number.length - 8
+
   const cents = number.substring(centsStartingPosition)
-  return `${millions}.${thousands}.${dollars},${cents}`
+
+  const realNumber = removeLeadingZeros(number)
+
+  if (realNumber.length <= 5) {
+    const dollars = removeLeadingZeros(number.substring(0, centsStartingPosition))
+    const cents = number.substring(centsStartingPosition)
+    return `${dollars},${cents}`
+  }
+
+  if (realNumber.length > 5 && number.length <= 8) {
+    const thousands = removeLeadingZeros(number.substring(0, dollarsStartingPosition))
+    const dollars = removeLeadingZeros(number.substring(dollarsStartingPosition, centsStartingPosition))
+    const cents = number.substring(centsStartingPosition)
+
+    return `${thousands}.${dollars},${cents}`
+  }
+
+  if (realNumber.length > 8) {
+    const millions = removeLeadingZeros(number.substring(0, thousandsStartingPosition))
+    const thousands = removeLeadingZeros(number.substring(thousandsStartingPosition, dollarsStartingPosition))
+    const dollars = removeLeadingZeros(number.substring(dollarsStartingPosition, centsStartingPosition))
+    const cents = number.substring(centsStartingPosition)
+
+    return `${millions}.${thousands}.${dollars},${cents}`
+  }
 }
 
 export const toCurrency = value => {
