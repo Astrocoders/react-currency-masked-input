@@ -98,7 +98,7 @@ describe('with any unspecified prop', () => {
 describe('when the input value changes', () => {
   const props = {}
   const changeEvent = { persist: createSpy('persist'), target: { value: '350' } }
-  const expectedValue = '3.50'
+  const expectedValue = '3,50'
   let component
   let componentInstance
 
@@ -128,7 +128,7 @@ describe('when the input value changes', () => {
 describe('when the input value changes and props.onChange is specified', () => {
   const props = { onChange: createSpy('onChange') }
   const changeEvent = { persist: createSpy('persist'), target: { value: '350' } }
-  const expectedValue = '3.50'
+  const expectedValue = '3,50'
   let component
   let componentInstance
 

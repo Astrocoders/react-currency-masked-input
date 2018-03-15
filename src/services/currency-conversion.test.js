@@ -11,7 +11,7 @@ describe('toCurrency', () => {
     })
 
     it('returns a penny amount', () => {
-      expect(result).toEqual('0.01')
+      expect(result).toEqual('0,01')
     })
 
   })
@@ -25,7 +25,7 @@ describe('toCurrency', () => {
     })
 
     it('returns a double digit cents amount', () => {
-      expect(result).toEqual('0.50')
+      expect(result).toEqual('0,50')
     })
 
   })
@@ -39,13 +39,13 @@ describe('toCurrency', () => {
     })
 
     it('returns a dollar and cents amount', () => {
-      expect(result).toEqual('2.55')
+      expect(result).toEqual('2,55')
     })
 
   })
 
   describe('with a several-digit number', () => {
-    const value = '2558'
+    const value = '25538'
     let result
 
     beforeAll(() => {
@@ -53,7 +53,35 @@ describe('toCurrency', () => {
     })
 
     it('returns a multiple dollar and cents value', () => {
-      expect(result).toEqual('25.58')
+      expect(result).toEqual('255,38')
+    })
+
+  })
+
+  describe('with thousands', () => {
+    const value = '225538'
+    let result
+
+    beforeAll(() => {
+      result = toCurrency(value)
+    })
+
+    it('returns a multiple dollar and cents value', () => {
+      expect(result).toEqual('2.255,38')
+    })
+
+  })
+
+  describe('with millions', () => {
+    const value = '366625569'
+    let result
+
+    beforeAll(() => {
+      result = toCurrency(value)
+    })
+
+    it('returns a multiple dollar and cents value', () => {
+      expect(result).toEqual('3.666.255,69')
     })
 
   })
@@ -67,7 +95,7 @@ describe('toCurrency', () => {
     })
 
     it('returns a real dollar amount', () => {
-      expect(result).toEqual('22.50')
+      expect(result).toEqual('22,50')
     })
 
   })
@@ -81,7 +109,7 @@ describe('toCurrency', () => {
     })
 
     it('returns a real dollar amount', () => {
-      expect(result).toEqual('2.50')
+      expect(result).toEqual('2,50')
     })
 
   })
@@ -95,13 +123,13 @@ describe('toCurrency', () => {
     })
 
     it('returns the cents with only one leading zero', () => {
-      expect(result).toEqual('0.50')
+      expect(result).toEqual('0,50')
     })
 
   })
 
-  describe('the value includes dots', () => {
-    const value = '2.04'
+  describe('the value includes commas', () => {
+    const value = '2,04'
     let result
 
     beforeAll(() => {
@@ -109,7 +137,7 @@ describe('toCurrency', () => {
     })
 
     it('returns a number without the extra dots', () => {
-      expect(result).toEqual('2.04')
+      expect(result).toEqual('2,04')
     })
 
   })
@@ -123,7 +151,7 @@ describe('toCurrency', () => {
     })
 
     it('returns a number with a negative prefix', () => {
-      expect(result).toEqual('-2.00')
+      expect(result).toEqual('-2,00')
     })
   })
 
@@ -136,7 +164,7 @@ describe('toCurrency', () => {
     })
 
     it('returns a zero', () => {
-      expect(result).toEqual('0.00')
+      expect(result).toEqual('0,00')
     })
 
   })
@@ -149,7 +177,7 @@ describe('toCurrency', () => {
     })
 
     it('returns a zero', () => {
-      expect(result).toEqual('0.00')
+      expect(result).toEqual('0,00')
     })
 
   })
