@@ -127,8 +127,8 @@ describe('when the input value changes', () => {
 
 describe('when the input value changes and props.onChange is specified', () => {
   const props = { onChange: createSpy('onChange') }
-  const changeEvent = { persist: createSpy('persist'), target: { value: '350' } }
-  const expectedValue = '3,50'
+  const changeEvent = { persist: createSpy('persist'), target: { value: '358733300' } }
+  const expectedValue = '3.587.333,00'
   let component
   let componentInstance
 
