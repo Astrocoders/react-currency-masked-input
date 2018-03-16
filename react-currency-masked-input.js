@@ -31,39 +31,48 @@ var removeLeadingZeros = function removeLeadingZeros(number) {
 
 var addDecimalToNumber = function addDecimalToNumber(number) {
   var centsStartingPosition = number.length - 2;
-  var dollarsStartingPosition = number.length - 5;
-  var thousandsStartingPosition = number.length - 8;
 
-  var realNumber = removeLeadingZeros(number);
+  var cents = number.substring(centsStartingPosition);
+  var dollars = removeLeadingZeros(number.substring(0, centsStartingPosition));
 
-  if (realNumber.length <= 5) {
-    var dollars = removeLeadingZeros(number.substring(0, centsStartingPosition));
-    var cents = number.substring(centsStartingPosition);
-    return dollars + ',' + cents;
-  }
+  return dollars + ',' + cents;
+};
 
-  if (realNumber.length > 5 && number.length <= 8) {
-    var thousands = removeLeadingZeros(number.substring(0, dollarsStartingPosition));
-    var _dollars = removeLeadingZeros(number.substring(dollarsStartingPosition, centsStartingPosition));
-    var _cents = number.substring(centsStartingPosition);
+var handleThousands = function handleThousands(number) {
+  var dollarsStartingPosition = number.length - 6;
 
-    return thousands + '.' + _dollars + ',' + _cents;
-  }
+  var dollars = number.substring(dollarsStartingPosition);
+  var thousands = removeLeadingZeros(number.substring(0, dollarsStartingPosition));
 
-  if (realNumber.length > 8) {
-    var millions = removeLeadingZeros(number.substring(0, thousandsStartingPosition));
-    var _thousands = removeLeadingZeros(number.substring(thousandsStartingPosition, dollarsStartingPosition));
-    var _dollars2 = removeLeadingZeros(number.substring(dollarsStartingPosition, centsStartingPosition));
-    var _cents2 = number.substring(centsStartingPosition);
+  return thousands + '.' + dollars;
+};
 
-    return millions + '.' + _thousands + '.' + _dollars2 + ',' + _cents2;
-  }
+var handleMillions = function handleMillions(number) {
+  var thousandsStartingPosition = number.length - 10;
+
+  var thousands = number.substring(thousandsStartingPosition);
+  var millions = removeLeadingZeros(number.substring(0, thousandsStartingPosition));
+
+  return millions + '.' + thousands;
 };
 
 var toCurrency = function toCurrency(value) {
   var digits = getDigitsFromValue(value);
   var digitsWithPadding = padDigits(digits);
-  return addDecimalToNumber(digitsWithPadding);
+  var realNumber = removeLeadingZeros(digitsWithPadding);
+
+  if (realNumber.length <= 5) {
+    return addDecimalToNumber(digitsWithPadding);
+  } else {
+    if (realNumber.length > 5 && realNumber.length <= 8) {
+      var numberWithDecimals = addDecimalToNumber(digitsWithPadding);
+      return handleThousands(numberWithDecimals);
+    } else {
+      var _numberWithDecimals = addDecimalToNumber(digitsWithPadding);
+      var thousandsWithDecimals = handleThousands(_numberWithDecimals);
+      return handleMillions(thousandsWithDecimals);
+    }
+  }
 };
 
 var classCallCheck = function (instance, Constructor) {
