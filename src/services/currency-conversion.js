@@ -21,8 +21,6 @@ const addDecimalToNumber = number => {
   const dollarsStartingPosition = number.length - 5
   const thousandsStartingPosition = number.length - 8
 
-  const cents = number.substring(centsStartingPosition)
-
   const realNumber = removeLeadingZeros(number)
 
   if (realNumber.length <= 5) {

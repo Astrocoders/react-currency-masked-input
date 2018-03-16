@@ -34,31 +34,29 @@ var addDecimalToNumber = function addDecimalToNumber(number) {
   var dollarsStartingPosition = number.length - 5;
   var thousandsStartingPosition = number.length - 8;
 
-  var cents = number.substring(centsStartingPosition);
-
   var realNumber = removeLeadingZeros(number);
 
   if (realNumber.length <= 5) {
     var dollars = removeLeadingZeros(number.substring(0, centsStartingPosition));
-    var _cents = number.substring(centsStartingPosition);
-    return dollars + ',' + _cents;
+    var cents = number.substring(centsStartingPosition);
+    return dollars + ',' + cents;
   }
 
   if (realNumber.length > 5 && number.length <= 8) {
     var thousands = removeLeadingZeros(number.substring(0, dollarsStartingPosition));
     var _dollars = removeLeadingZeros(number.substring(dollarsStartingPosition, centsStartingPosition));
-    var _cents2 = number.substring(centsStartingPosition);
+    var _cents = number.substring(centsStartingPosition);
 
-    return thousands + '.' + _dollars + ',' + _cents2;
+    return thousands + '.' + _dollars + ',' + _cents;
   }
 
   if (realNumber.length > 8) {
     var millions = removeLeadingZeros(number.substring(0, thousandsStartingPosition));
     var _thousands = removeLeadingZeros(number.substring(thousandsStartingPosition, dollarsStartingPosition));
     var _dollars2 = removeLeadingZeros(number.substring(dollarsStartingPosition, centsStartingPosition));
-    var _cents3 = number.substring(centsStartingPosition);
+    var _cents2 = number.substring(centsStartingPosition);
 
-    return millions + '.' + _thousands + '.' + _dollars2 + ',' + _cents3;
+    return millions + '.' + _thousands + '.' + _dollars2 + ',' + _cents2;
   }
 };
 
